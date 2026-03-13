@@ -684,6 +684,57 @@
             display: flex; gap: 6px;
             margin-bottom: 14px;
         }
+
+        /* ===== FOR YERAM ===== */
+        .yeram-section {
+            margin-top: 50px;
+            padding: 40px 30px;
+            background: linear-gradient(135deg, rgba(255,107,107,0.06), rgba(168,85,247,0.06));
+            border: 1px solid rgba(255,107,107,0.2);
+            border-radius: var(--radius-xl);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .yeram-section::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: conic-gradient(from 180deg, transparent, rgba(255,107,107,0.06), transparent 30%);
+            animation: vibeRotate 8s linear infinite;
+        }
+        .yeram-inner {
+            position: relative; z-index: 1;
+        }
+        .yeram-name {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #FF6B6B, #A855F7, #6C63FF);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 4s ease-in-out infinite;
+            margin-bottom: 16px;
+        }
+        .yeram-msg {
+            color: var(--text-secondary);
+            font-weight: 300;
+            line-height: 2;
+            font-size: 0.95rem;
+        }
+        .yeram-msg strong {
+            color: var(--accent-2);
+            font-weight: 600;
+        }
+        .yeram-heart {
+            display: inline-block;
+            font-size: 36px;
+            margin-top: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
         .term-dot {
             width: 10px; height: 10px;
             border-radius: 50%;
@@ -1121,19 +1172,38 @@
                             <div class="term-dot g"></div>
                         </div>
                         <div class="term-line"><span class="comment"># 바이브코딩 시작!</span></div>
-                        <div class="term-line"><span class="cmd">$</span> 여자친구가 시드니 여행 갔는데...</div>
+                        <div class="term-line"><span class="cmd">$</span> 예람이가 시드니 여행 갔는데...</div>
                         <div class="term-line"><span class="cmd">$</span> 맛집이랑 관광지 꿀팁 웹사이트 만들어줘</div>
-                        <div class="term-line"><span class="cmd">$</span> 와 소리 나오게!!</div>
+                        <div class="term-line"><span class="cmd">$</span> 예람이가 감동받게 제대로!!</div>
                         <div class="term-line"><span class="cmd">AI:</span> 알겠습니다. 만들어볼게요 🚀<span class="term-type"></span></div>
                     </div>
                 </div>
             </div>
+
+            <!-- 예람이에게 보내는 메시지 -->
+            <div class="yeram-section reveal">
+                <div class="yeram-inner">
+                    <div class="yeram-name">For. 예람 💕</div>
+                    <p class="yeram-msg">
+                        예람아, 시드니에서 잘 지내고 있지? 🌏<br>
+                        멀리서 네가 좋은 곳 많이 다니고 맛있는 거 많이 먹었으면 해서<br>
+                        <strong>바이브코딩</strong>이라는 걸로 직접 이 사이트를 만들어봤어.<br><br>
+                        AI한테 하나하나 설명하면서 같이 만든 건데,<br>
+                        네가 이거 보고 "와 이걸 만들었어?!" 하면 좋겠다 ㅎㅎ<br><br>
+                        맛있는 거 많이 먹고, 예쁜 곳 많이 가고,<br>
+                        좋은 추억 잔뜩 만들어와! 💗<br>
+                        <strong>항상 응원해, 예람아 ✈️</strong>
+                    </p>
+                    <div class="yeram-heart">💝</div>
+                </div>
+            </div>
+
         </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
-        <p>Made with <span class="heart">❤️</span> by <span class="vibe">Vibe Coding</span> &middot; 시드니에서 최고의 시간 보내! 🇦🇺</p>
+        <p>Made with <span class="heart">❤️</span> by <span class="vibe">Vibe Coding</span> &middot; 예람아, 시드니에서 최고의 시간 보내! 🇦🇺</p>
     </footer>
 
     <!-- Back to top -->
