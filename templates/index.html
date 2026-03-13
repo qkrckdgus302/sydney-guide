@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🇦🇺 시드니 완전정복 가이드</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* =====================================================
+           CSS VARIABLES & RESET
+        ===================================================== */
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: rgba(255,255,255,0.04);
+            --bg-card-hover: rgba(255,255,255,0.08);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255,255,255,0.7);
+            --text-muted: rgba(255,255,255,0.4);
+            --accent-1: #6C63FF;
+            --accent-2: #FF6B6B;
+            --accent-3: #4ECDC4;
+            --accent-4: #FFE66D;
+            --accent-5: #A855F7;
+            --gradient-1: linear-gradient(135deg, #6C63FF, #A855F7);
+            --gradient-2: linear-gradient(135deg, #FF6B6B, #FFE66D);
+            --gradient-3: linear-gradient(135deg, #4ECDC4, #44CE88);
+            --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --border: rgba(255,255,255,0.08);
+            --radius-sm: 10px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+            --shadow-glow: 0 0 40px rgba(108,99,255,0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Noto Sans KR', 'Poppins', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* =====================================================
+           ANIMATED BACKGROUND
+        ===================================================== */
+        .bg-gradient-animation {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .bg-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.12;
+            animation: orbFloat 20s ease-in-out infinite;
+        }
+        .bg-orb:nth-child(1) {
+            width: 600px; height: 600px;
+            background: var(--accent-1);
+            top: -200px; left: -100px;
+            animation-delay: 0s;
+        }
+        .bg-orb:nth-child(2) {
+            width: 500px; height: 500px;
+            background: var(--accent-2);
+            top: 50%; right: -150px;
+            animation-delay: -7s;
+            animation-duration: 25s;
+        }
+        .bg-orb:nth-child(3) {
+            width: 400px; height: 400px;
+            background: var(--accent-3);
+            bottom: -100px; left: 30%;
+            animation-delay: -14s;
+            animation-duration: 22s;
+        }
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(60px, -40px) scale(1.1); }
+            50% { transform: translate(-30px, 60px) scale(0.9); }
+            75% { transform: translate(40px, 30px) scale(1.05); }
+        }
+
+        /* =====================================================
+           PARTICLE SYSTEM
+        ===================================================== */
+        #particles {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1; pointer-events: none;
+        }
+
+        /* =====================================================
+           NAVIGATION
+        ===================================================== */
+        .nav {
+            position: fixed; top: 0; left: 0;
+            width: 100%; z-index: 1000;
+            padding: 0 20px;
+            transition: all 0.4s cubic-bezier(.4,0,.2,1);
+            backdrop-filter: blur(0px);
+        }
+        .nav.scrolled {
+            background: rgba(10,10,15,0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-inner {
+            max-width: 1200px; margin: 0 auto;
+            display: flex; align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+        .nav-logo {
+            display: flex; align-items: center; gap: 10px;
+            font-weight: 800; font-size: 1.2rem;
+            text-decoration: none; color: var(--text-primary);
+        }
+        .nav-logo-icon {
+            width: 36px; height: 36px;
+            background: var(--gradient-1);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px;
+        }
+        .nav-links {
+            display: flex; gap: 8px; list-style: none;
+        }
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--text-primary);
+            background: rgba(255,255,255,0.08);
+        }
+        .nav-mobile-btn {
+            display: none;
+            background: none; border: none;
+            color: white; font-size: 24px;
+            cursor: pointer; padding: 8px;
+        }
+
+        /* =====================================================
+           HERO SECTION
+        ===================================================== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex; align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 20px 80px;
+            z-index: 10;
+        }
+        .hero-content {
+            max-width: 800px;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 8px 20px;
+            background: rgba(108,99,255,0.15);
+            border: 1px solid rgba(108,99,255,0.3);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: #a5a0ff;
+            margin-bottom: 24px;
+            animation: fadeSlideUp 0.8s ease 0.2s both;
+        }
+        .hero-badge .pulse-dot {
+            width: 8px; height: 8px;
+            background: #6C63FF;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.5); }
+        }
+        .hero h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(2.8rem, 7vw, 5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            animation: fadeSlideUp 0.8s ease 0.4s both;
+        }
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, #6C63FF, #A855F7, #FF6B6B, #FFE66D);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 4s ease-in-out infinite;
+        }
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 550px;
+            margin: 0 auto 35px;
+            font-weight: 300;
+            animation: fadeSlideUp 0.8s ease 0.6s both;
+        }
+        .hero-stats {
+            display: flex; justify-content: center; gap: 40px;
+            flex-wrap: wrap;
+            animation: fadeSlideUp 0.8s ease 0.8s both;
+        }
+        .hero-stat {
+            text-align: center;
+        }
+        .hero-stat .num {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            display: block;
+        }
+        .hero-stat:nth-child(1) .num { color: var(--accent-1); }
+        .hero-stat:nth-child(2) .num { color: var(--accent-2); }
+        .hero-stat:nth-child(3) .num { color: var(--accent-3); }
+        .hero-stat .label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+        .hero-cta {
+            display: flex; gap: 12px;
+            justify-content: center;
+            margin-top: 35px;
+            animation: fadeSlideUp 0.8s ease 1s both;
+        }
+        .btn {
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            display: inline-flex; align-items: center; gap: 8px;
+        }
+        .btn-primary {
+            background: var(--gradient-1);
+            color: white;
+            box-shadow: 0 4px 25px rgba(108,99,255,0.35);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 35px rgba(108,99,255,0.5);
+        }
+        .btn-ghost {
+            background: rgba(255,255,255,0.06);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+        .btn-ghost:hover {
+            background: rgba(255,255,255,0.12);
+        }
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite, fadeSlideUp 0.8s ease 1.2s both;
+        }
+        .scroll-mouse {
+            width: 26px; height: 40px;
+            border: 2px solid var(--text-muted);
+            border-radius: 15px;
+            position: relative;
+        }
+        .scroll-mouse::after {
+            content: '';
+            position: absolute;
+            top: 8px; left: 50%;
+            transform: translateX(-50%);
+            width: 4px; height: 8px;
+            background: var(--accent-1);
+            border-radius: 2px;
+            animation: scrollDot 2s infinite;
+        }
+        @keyframes scrollDot {
+            0% { opacity: 1; top: 8px; }
+            100% { opacity: 0; top: 22px; }
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(8px); }
+        }
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* =====================================================
+           SECTION COMMON
+        ===================================================== */
+        .section {
+            position: relative;
+            padding: 100px 20px;
+            z-index: 10;
+        }
+        .section-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .section-label {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+        .section-label span { font-size: 14px; }
+        .section-header h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+        .section-header p {
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+
+        /* =====================================================
+           FILTER TABS
+        ===================================================== */
+        .filter-bar {
+            display: flex; justify-content: center;
+            gap: 8px; flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+        .filter-btn {
+            padding: 10px 22px;
+            border-radius: 50px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        .filter-btn:hover {
+            border-color: rgba(108,99,255,0.4);
+            color: var(--text-primary);
+        }
+        .filter-btn.active {
+            background: var(--gradient-1);
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 4px 15px rgba(108,99,255,0.3);
+        }
+
+        /* =====================================================
+           RESTAURANT CARDS
+        ===================================================== */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+        }
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(.4,0,.2,1);
+            cursor: pointer;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(108,99,255,0.3);
+            box-shadow: var(--shadow-glow);
+            background: var(--bg-card-hover);
+        }
+        .card-img {
+            width: 100%; height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .card:hover .card-img {
+            transform: scale(1.05);
+        }
+        .card-img-wrap {
+            overflow: hidden;
+            position: relative;
+        }
+        .card-price-badge {
+            position: absolute;
+            top: 14px; right: 14px;
+            padding: 6px 14px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent-4);
+        }
+        .card-rating {
+            position: absolute;
+            top: 14px; left: 14px;
+            padding: 6px 12px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            display: flex; align-items: center; gap: 4px;
+        }
+        .card-body {
+            padding: 24px;
+        }
+        .card-category {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-1);
+            margin-bottom: 8px;
+        }
+        .card-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .card-area {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            display: flex; align-items: center; gap: 4px;
+        }
+        .card-desc {
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            font-weight: 300;
+            margin-bottom: 14px;
+            line-height: 1.6;
+        }
+        .card-tip {
+            background: rgba(78,205,196,0.08);
+            border-left: 3px solid var(--accent-3);
+            padding: 10px 14px;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.8rem;
+            color: var(--accent-3);
+            font-weight: 400;
+        }
+        .card-tip::before {
+            content: '💡 ';
+        }
+        .card-tags {
+            display: flex; gap: 6px; flex-wrap: wrap;
+            margin-top: 14px;
+        }
+        .card-tag {
+            padding: 4px 12px;
+            background: rgba(108,99,255,0.1);
+            border-radius: 50px;
+            font-size: 0.7rem;
+            color: #a5a0ff;
+        }
+
+        /* =====================================================
+           ATTRACTION CARDS
+        ===================================================== */
+        .attr-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(.4,0,.2,1);
+            display: grid;
+            grid-template-columns: 1fr;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .attr-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .attr-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(255,107,107,0.3);
+            box-shadow: 0 0 40px rgba(255,107,107,0.1);
+        }
+        .attr-card .card-img { height: 220px; }
+        .attr-info-row {
+            display: flex; gap: 16px; flex-wrap: wrap;
+            margin-top: 14px;
+        }
+        .attr-info-item {
+            display: flex; align-items: center; gap: 6px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .attr-info-item strong {
+            color: var(--text-secondary);
+        }
+
+        /* =====================================================
+           TIPS SECTION
+        ===================================================== */
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .tip-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            position: relative;
+            overflow: hidden;
+        }
+        .tip-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .tip-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 3px;
+            background: var(--gradient-1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .tip-card:hover::before { opacity: 1; }
+        .tip-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(108,99,255,0.2);
+            background: var(--bg-card-hover);
+        }
+        .tip-icon {
+            font-size: 2.2rem;
+            margin-bottom: 14px;
+            display: block;
+        }
+        .tip-title {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+        .tip-content {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            line-height: 1.7;
+        }
+        .tip-category-badge {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 4px 12px;
+            background: rgba(168,85,247,0.1);
+            border-radius: 50px;
+            font-size: 0.7rem;
+            color: var(--accent-5);
+            font-weight: 500;
+        }
+
+        /* =====================================================
+           VIBE CODING SECTION  
+        ===================================================== */
+        .vibe-section {
+            background: linear-gradient(180deg, rgba(108,99,255,0.05) 0%, transparent 100%);
+        }
+        .vibe-card {
+            max-width: 700px;
+            margin: 0 auto;
+            background: rgba(108,99,255,0.06);
+            border: 1px solid rgba(108,99,255,0.2);
+            border-radius: var(--radius-xl);
+            padding: 50px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .vibe-card::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(108,99,255,0.1), transparent 30%);
+            animation: vibeRotate 6s linear infinite;
+        }
+        @keyframes vibeRotate {
+            100% { transform: rotate(360deg); }
+        }
+        .vibe-card-inner {
+            position: relative; z-index: 1;
+        }
+        .vibe-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            display: block;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .vibe-card h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        .vibe-card h3 .gradient-text {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .vibe-card p {
+            color: var(--text-secondary);
+            font-weight: 300;
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+        .vibe-tech-stack {
+            display: flex; justify-content: center;
+            gap: 12px; flex-wrap: wrap;
+            margin-top: 25px;
+        }
+        .tech-badge {
+            padding: 8px 18px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            font-size: 0.78rem;
+            font-weight: 500;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .vibe-terminal {
+            margin-top: 30px;
+            background: #0d0d12;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            text-align: left;
+            font-family: 'Courier New', monospace;
+            font-size: 0.82rem;
+        }
+        .vibe-terminal .term-header {
+            display: flex; gap: 6px;
+            margin-bottom: 14px;
+        }
+        .term-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+        }
+        .term-dot.r { background: #ff5f57; }
+        .term-dot.y { background: #febc2e; }
+        .term-dot.g { background: #28c840; }
+        .term-line {
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+        .term-line .cmd { color: var(--accent-3); }
+        .term-line .comment { color: #555; }
+        .term-type {
+            display: inline;
+            border-right: 2px solid var(--accent-1);
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+        .footer {
+            position: relative; z-index: 10;
+            text-align: center;
+            padding: 50px 20px;
+            border-top: 1px solid var(--border);
+        }
+        .footer p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 300;
+        }
+        .footer .heart { color: var(--accent-2); }
+        .footer .vibe { color: var(--accent-1); font-weight: 600; }
+
+        /* =====================================================
+           SCROLL ANIMATIONS
+        ===================================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(.4,0,.2,1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* =====================================================
+           SEARCH BAR (in each section)
+        ===================================================== */
+        .search-wrap {
+            max-width: 500px;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+        .search-input {
+            width: 100%;
+            padding: 14px 20px 14px 48px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        .search-input:focus {
+            border-color: var(--accent-1);
+            box-shadow: 0 0 20px rgba(108,99,255,0.1);
+        }
+        .search-input::placeholder { color: var(--text-muted); }
+        .search-icon {
+            position: absolute;
+            left: 18px; top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            color: var(--text-muted);
+        }
+
+        /* =====================================================
+           MODAL / DETAIL OVERLAY
+        ===================================================== */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: flex; align-items: center; justify-content: center;
+            padding: 20px;
+            opacity: 0; visibility: hidden;
+            transition: all 0.4s ease;
+        }
+        .modal-overlay.open {
+            opacity: 1; visibility: visible;
+        }
+        .modal {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            max-width: 550px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.4s cubic-bezier(.4,0,.2,1);
+        }
+        .modal-overlay.open .modal {
+            transform: scale(1) translateY(0);
+        }
+        .modal-img {
+            width: 100%; height: 250px;
+            object-fit: cover;
+            border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+        }
+        .modal-body {
+            padding: 30px;
+        }
+        .modal-close {
+            position: absolute; top: -999px;
+        }
+        .modal-close-btn {
+            position: sticky; top: 0; float: right;
+            width: 40px; height: 40px;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 14px 14px 0 0;
+            z-index: 10;
+            transition: background 0.3s ease;
+        }
+        .modal-close-btn:hover { background: rgba(255,107,107,0.4); }
+        .modal-category {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-1);
+            margin-bottom: 6px;
+        }
+        .modal-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .modal-area {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+        .modal-desc {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        .modal-tip {
+            background: rgba(78,205,196,0.08);
+            border-left: 3px solid var(--accent-3);
+            padding: 14px 18px;
+            border-radius: 0 12px 12px 0;
+            font-size: 0.88rem;
+            color: var(--accent-3);
+            line-height: 1.6;
+        }
+        .modal-tip::before { content: '💡 꿀팁: '; font-weight: 600; }
+        .modal-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .modal-info-box {
+            background: rgba(255,255,255,0.04);
+            border-radius: var(--radius-sm);
+            padding: 14px;
+            text-align: center;
+        }
+        .modal-info-box .info-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+        .modal-info-box .info-value {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .modal-tags {
+            display: flex; gap: 6px; flex-wrap: wrap;
+            margin-top: 18px;
+        }
+
+        /* =====================================================
+           BACK TO TOP
+        ===================================================== */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px; right: 30px;
+            width: 50px; height: 50px;
+            background: var(--gradient-1);
+            border: none; border-radius: 50%;
+            color: white; font-size: 20px;
+            cursor: pointer; z-index: 999;
+            opacity: 0; visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(108,99,255,0.4);
+        }
+        .back-to-top.show {
+            opacity: 1; visibility: visible;
+            transform: translateY(0);
+        }
+        .back-to-top:hover {
+            transform: translateY(-3px);
+        }
+
+        /* =====================================================
+           LOADING SKELETON
+        ===================================================== */
+        .skeleton {
+            background: linear-gradient(90deg, var(--bg-card) 25%, rgba(255,255,255,0.06) 50%, var(--bg-card) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: var(--radius-lg);
+        }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* =====================================================
+           COUNT-UP ANIMATION
+        ===================================================== */
+        .count-up {
+            display: inline-block;
+        }
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .nav-links.open {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 70px; left: 0;
+                width: 100%;
+                background: rgba(10,10,15,0.95);
+                backdrop-filter: blur(20px);
+                padding: 20px;
+                border-bottom: 1px solid var(--border);
+            }
+            .nav-mobile-btn { display: block; }
+            .hero-stats { gap: 24px; }
+            .hero-stat .num { font-size: 1.8rem; }
+            .cards-grid { grid-template-columns: 1fr; }
+            .tips-grid { grid-template-columns: 1fr; }
+            .vibe-card { padding: 30px 20px; }
+            .modal-info-grid { grid-template-columns: 1fr; }
+            .hero-cta { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BG Animation -->
+    <div class="bg-gradient-animation">
+        <div class="bg-orb"></div>
+        <div class="bg-orb"></div>
+        <div class="bg-orb"></div>
+    </div>
+
+    <!-- Particles -->
+    <canvas id="particles"></canvas>
+
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="#" class="nav-logo">
+                <div class="nav-logo-icon">🇦🇺</div>
+                Sydney Guide
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#food" class="active">🍽️ 맛집</a></li>
+                <li><a href="#attractions">📍 관광지</a></li>
+                <li><a href="#tips">💡 꿀팁</a></li>
+                <li><a href="#vibe">⚡ About</a></li>
+            </ul>
+            <button class="nav-mobile-btn" id="navToggle" onclick="toggleNav()">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <div class="pulse-dot"></div>
+                Vibe Coding으로 제작됨 ⚡
+            </div>
+            <h1>시드니<br><span class="gradient-text">완전정복</span> 가이드</h1>
+            <p>맛집, 관광지, 현지인 꿀팁까지!<br>시드니에서 필요한 모든 것을 담았어요 🌏</p>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <span class="num count-up" data-target="10">0</span>
+                    <span class="label">맛집 추천</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="num count-up" data-target="10">0</span>
+                    <span class="label">관광 명소</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="num count-up" data-target="12">0</span>
+                    <span class="label">생존 꿀팁</span>
+                </div>
+            </div>
+            <div class="hero-cta">
+                <a href="#food" class="btn btn-primary">🍽️ 맛집 보러가기</a>
+                <a href="#tips" class="btn btn-ghost">💡 꿀팁 먼저 보기</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-mouse"></div>
+        </div>
+    </section>
+
+    <!-- ==================== RESTAURANTS ==================== -->
+    <section class="section" id="food">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-label" style="color:var(--accent-2)">
+                    <span>🍽️</span> RESTAURANTS & CAFES
+                </div>
+                <h2>시드니 <span style="color:var(--accent-2)">맛집</span> 추천</h2>
+                <p>현지인 추천 & 관광객 필수 코스까지 전부 모았어요</p>
+            </div>
+            <div class="search-wrap reveal">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" id="foodSearch" placeholder="맛집 이름, 지역, 태그로 검색..." oninput="filterCards('food')">
+            </div>
+            <div class="filter-bar reveal" id="foodFilters">
+                <button class="filter-btn active" data-filter="all" onclick="setFilter('food','all',this)">전체</button>
+                <button class="filter-btn" data-filter="카페" onclick="setFilter('food','카페',this)">☕ 카페</button>
+                <button class="filter-btn" data-filter="아시안" onclick="setFilter('food','아시안',this)">🥢 아시안</button>
+                <button class="filter-btn" data-filter="해산물" onclick="setFilter('food','해산물',this)">🦐 해산물</button>
+                <button class="filter-btn" data-filter="파인다이닝" onclick="setFilter('food','파인다이닝',this)">✨ 파인다이닝</button>
+                <button class="filter-btn" data-filter="$" onclick="setFilter('food','$',this)">💰 저렴한</button>
+            </div>
+            <div class="cards-grid" id="foodGrid"></div>
+        </div>
+    </section>
+
+    <!-- ==================== ATTRACTIONS ==================== -->
+    <section class="section" id="attractions">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-label" style="color:var(--accent-3)">
+                    <span>📍</span> MUST-VISIT ATTRACTIONS
+                </div>
+                <h2>시드니 <span style="color:var(--accent-3)">관광지</span> TOP 10</h2>
+                <p>놓치면 후회할 시드니 필수 명소들</p>
+            </div>
+            <div class="search-wrap reveal">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" id="attrSearch" placeholder="관광지 이름, 태그로 검색..." oninput="filterCards('attr')">
+            </div>
+            <div class="filter-bar reveal" id="attrFilters">
+                <button class="filter-btn active" data-filter="all" onclick="setFilter('attr','all',this)">전체</button>
+                <button class="filter-btn" data-filter="필수" onclick="setFilter('attr','필수',this)">⭐ 필수</button>
+                <button class="filter-btn" data-filter="비치" onclick="setFilter('attr','비치',this)">🏖️ 비치</button>
+                <button class="filter-btn" data-filter="자연" onclick="setFilter('attr','자연',this)">🌿 자연</button>
+                <button class="filter-btn" data-filter="무료" onclick="setFilter('attr','무료',this)">🆓 무료</button>
+                <button class="filter-btn" data-filter="야경" onclick="setFilter('attr','야경',this)">🌙 야경</button>
+            </div>
+            <div class="cards-grid" id="attrGrid"></div>
+        </div>
+    </section>
+
+    <!-- ==================== TIPS ==================== -->
+    <section class="section" id="tips">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-label" style="color:var(--accent-4)">
+                    <span>💡</span> SURVIVAL TIPS
+                </div>
+                <h2>시드니 <span style="color:var(--accent-4)">생존 꿀팁</span></h2>
+                <p>현지인도 인정한, 알면 100배 즐거운 꿀팁들</p>
+            </div>
+            <div class="tips-grid" id="tipsGrid"></div>
+        </div>
+    </section>
+
+    <!-- ==================== VIBE CODING ==================== -->
+    <section class="section vibe-section" id="vibe">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-label" style="color:var(--accent-1)">
+                    <span>⚡</span> BUILT DIFFERENT
+                </div>
+                <h2>이 사이트는 <span style="color:var(--accent-1)">특별하게</span> 만들어졌어요</h2>
+            </div>
+            <div class="vibe-card reveal">
+                <div class="vibe-card-inner">
+                    <span class="vibe-icon">⚡</span>
+                    <h3>Made with <span class="gradient-text">Vibe Coding</span></h3>
+                    <p>
+                        이 웹사이트는 AI와 사람이 함께 만든 <strong>바이브코딩</strong> 프로젝트예요.<br>
+                        코드 한 줄 한 줄을 AI에게 설명하고, AI가 바로 만들어내는 새로운 개발 방식!<br>
+                        디자인, 데이터, 인터랙션까지 전부 바이브코딩으로 완성했어요.
+                    </p>
+                    <div class="vibe-tech-stack">
+                        <div class="tech-badge">🐍 Python</div>
+                        <div class="tech-badge">🌶️ Flask</div>
+                        <div class="tech-badge">⚡ JavaScript</div>
+                        <div class="tech-badge">🎨 CSS3</div>
+                        <div class="tech-badge">🤖 AI Copilot</div>
+                    </div>
+                    <div class="vibe-terminal">
+                        <div class="term-header">
+                            <div class="term-dot r"></div>
+                            <div class="term-dot y"></div>
+                            <div class="term-dot g"></div>
+                        </div>
+                        <div class="term-line"><span class="comment"># 바이브코딩 시작!</span></div>
+                        <div class="term-line"><span class="cmd">$</span> 여자친구가 시드니 여행 갔는데...</div>
+                        <div class="term-line"><span class="cmd">$</span> 맛집이랑 관광지 꿀팁 웹사이트 만들어줘</div>
+                        <div class="term-line"><span class="cmd">$</span> 와 소리 나오게!!</div>
+                        <div class="term-line"><span class="cmd">AI:</span> 알겠습니다. 만들어볼게요 🚀<span class="term-type"></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Made with <span class="heart">❤️</span> by <span class="vibe">Vibe Coding</span> &middot; 시드니에서 최고의 시간 보내! 🇦🇺</p>
+    </footer>
+
+    <!-- Back to top -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0})">↑</button>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+        <div class="modal" id="modal">
+            <button class="modal-close-btn" onclick="closeModalDirect()">✕</button>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+    // ============================================================
+    //  DATA
+    // ============================================================
+    let restaurants = [];
+    let attractions = [];
+    let tips = [];
+    let currentFoodFilter = 'all';
+    let currentAttrFilter = 'all';
+
+    // ============================================================
+    //  FETCH DATA
+    // ============================================================
+    async function loadData() {
+        const [rRes, aRes, tRes] = await Promise.all([
+            fetch('/api/restaurants'),
+            fetch('/api/attractions'),
+            fetch('/api/tips')
+        ]);
+        restaurants = await rRes.json();
+        attractions = await aRes.json();
+        tips = await tRes.json();
+        renderFoodCards(restaurants);
+        renderAttrCards(attractions);
+        renderTipCards(tips);
+    }
+
+    // ============================================================
+    //  RENDER RESTAURANT CARDS
+    // ============================================================
+    function renderFoodCards(data) {
+        const grid = document.getElementById('foodGrid');
+        if (data.length === 0) {
+            grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--text-muted);padding:40px;">검색 결과가 없어요 😢</p>';
+            return;
+        }
+        grid.innerHTML = data.map((r, i) => `
+            <div class="card" style="transition-delay:${i * 0.08}s" onclick="openRestaurantModal(${r.id})">
+                <div class="card-img-wrap">
+                    <img class="card-img" src="${sanitize(r.image)}" alt="${sanitize(r.name)}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600'">
+                    <div class="card-price-badge">${sanitize(r.price)}</div>
+                    <div class="card-rating">⭐ ${r.rating}</div>
+                </div>
+                <div class="card-body">
+                    <div class="card-category">${sanitize(r.category)}</div>
+                    <div class="card-title">${sanitize(r.name)}</div>
+                    <div class="card-area">📍 ${sanitize(r.area)}</div>
+                    <div class="card-desc">${sanitize(r.desc)}</div>
+                    <div class="card-tip">${sanitize(r.tip)}</div>
+                    <div class="card-tags">${r.tags.map(t => `<span class="card-tag">#${sanitize(t)}</span>`).join('')}</div>
+                </div>
+            </div>
+        `).join('');
+        observeCards(grid);
+    }
+
+    // ============================================================
+    //  RENDER ATTRACTION CARDS
+    // ============================================================
+    function renderAttrCards(data) {
+        const grid = document.getElementById('attrGrid');
+        if (data.length === 0) {
+            grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--text-muted);padding:40px;">검색 결과가 없어요 😢</p>';
+            return;
+        }
+        grid.innerHTML = data.map((a, i) => `
+            <div class="attr-card card" style="transition-delay:${i * 0.08}s" onclick="openAttrModal(${a.id})">
+                <div class="card-img-wrap">
+                    <img class="card-img" src="${sanitize(a.image)}" alt="${sanitize(a.name)}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=600'">
+                </div>
+                <div class="card-body">
+                    <div class="card-category" style="color:var(--accent-3)">${sanitize(a.category)}</div>
+                    <div class="card-title">${sanitize(a.name)}</div>
+                    <div class="card-area">📍 ${sanitize(a.area)}</div>
+                    <div class="card-desc">${sanitize(a.desc)}</div>
+                    <div class="card-tip">${sanitize(a.tip)}</div>
+                    <div class="attr-info-row">
+                        <div class="attr-info-item">🕐 <strong>${sanitize(a.duration)}</strong></div>
+                        <div class="attr-info-item">💰 <strong>${sanitize(a.cost)}</strong></div>
+                    </div>
+                    <div class="card-tags">${a.tags.map(t => `<span class="card-tag">#${sanitize(t)}</span>`).join('')}</div>
+                </div>
+            </div>
+        `).join('');
+        observeCards(grid);
+    }
+
+    // ============================================================
+    //  RENDER TIP CARDS
+    // ============================================================
+    function renderTipCards(data) {
+        const grid = document.getElementById('tipsGrid');
+        grid.innerHTML = data.map((t, i) => `
+            <div class="tip-card" style="transition-delay:${i * 0.06}s">
+                <span class="tip-icon">${t.icon}</span>
+                <div class="tip-title">${sanitize(t.title)}</div>
+                <div class="tip-content">${sanitize(t.content)}</div>
+                <span class="tip-category-badge">${sanitize(t.category)}</span>
+            </div>
+        `).join('');
+        observeCards(grid);
+    }
+
+    // ============================================================
+    //  FILTERS & SEARCH
+    // ============================================================
+    function setFilter(type, filter, btn) {
+        const containerId = type === 'food' ? 'foodFilters' : 'attrFilters';
+        document.querySelectorAll(`#${containerId} .filter-btn`).forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        if (type === 'food') {
+            currentFoodFilter = filter;
+            filterCards('food');
+        } else {
+            currentAttrFilter = filter;
+            filterCards('attr');
+        }
+    }
+
+    function filterCards(type) {
+        if (type === 'food') {
+            const query = document.getElementById('foodSearch').value.toLowerCase();
+            let filtered = restaurants;
+            if (currentFoodFilter !== 'all') {
+                if (currentFoodFilter === '$') {
+                    filtered = filtered.filter(r => r.price === '$');
+                } else {
+                    filtered = filtered.filter(r =>
+                        r.category.includes(currentFoodFilter) ||
+                        r.tags.some(t => t.includes(currentFoodFilter))
+                    );
+                }
+            }
+            if (query) {
+                filtered = filtered.filter(r =>
+                    r.name.toLowerCase().includes(query) ||
+                    r.area.toLowerCase().includes(query) ||
+                    r.desc.toLowerCase().includes(query) ||
+                    r.tags.some(t => t.toLowerCase().includes(query))
+                );
+            }
+            renderFoodCards(filtered);
+        } else {
+            const query = document.getElementById('attrSearch').value.toLowerCase();
+            let filtered = attractions;
+            if (currentAttrFilter !== 'all') {
+                filtered = filtered.filter(a =>
+                    a.category.includes(currentAttrFilter) ||
+                    a.tags.some(t => t.includes(currentAttrFilter))
+                );
+            }
+            if (query) {
+                filtered = filtered.filter(a =>
+                    a.name.toLowerCase().includes(query) ||
+                    a.area.toLowerCase().includes(query) ||
+                    a.desc.toLowerCase().includes(query) ||
+                    a.tags.some(t => t.toLowerCase().includes(query))
+                );
+            }
+            renderAttrCards(filtered);
+        }
+    }
+
+    // ============================================================
+    //  MODALS
+    // ============================================================
+    function openRestaurantModal(id) {
+        const r = restaurants.find(x => x.id === id);
+        if (!r) return;
+        document.getElementById('modalContent').innerHTML = `
+            <img class="modal-img" src="${sanitize(r.image)}" alt="${sanitize(r.name)}" onerror="this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600'">
+            <div class="modal-body">
+                <div class="modal-category">${sanitize(r.category)}</div>
+                <h2 class="modal-title">${sanitize(r.name)}</h2>
+                <div class="modal-area">📍 ${sanitize(r.area)}</div>
+                <div class="modal-info-grid">
+                    <div class="modal-info-box">
+                        <div class="info-label">가격대</div>
+                        <div class="info-value" style="color:var(--accent-4)">${sanitize(r.price)}</div>
+                    </div>
+                    <div class="modal-info-box">
+                        <div class="info-label">평점</div>
+                        <div class="info-value" style="color:var(--accent-2)">⭐ ${r.rating}</div>
+                    </div>
+                </div>
+                <p class="modal-desc" style="margin-top:20px">${sanitize(r.desc)}</p>
+                <div class="modal-tip">${sanitize(r.tip)}</div>
+                <div class="modal-tags">${r.tags.map(t => `<span class="card-tag">#${sanitize(t)}</span>`).join('')}</div>
+            </div>
+        `;
+        document.getElementById('modalOverlay').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function openAttrModal(id) {
+        const a = attractions.find(x => x.id === id);
+        if (!a) return;
+        document.getElementById('modalContent').innerHTML = `
+            <img class="modal-img" src="${sanitize(a.image)}" alt="${sanitize(a.name)}" onerror="this.src='https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=600'">
+            <div class="modal-body">
+                <div class="modal-category" style="color:var(--accent-3)">${sanitize(a.category)}</div>
+                <h2 class="modal-title">${sanitize(a.name)}</h2>
+                <div class="modal-area">📍 ${sanitize(a.area)}</div>
+                <div class="modal-info-grid">
+                    <div class="modal-info-box">
+                        <div class="info-label">소요시간</div>
+                        <div class="info-value">${sanitize(a.duration)}</div>
+                    </div>
+                    <div class="modal-info-box">
+                        <div class="info-label">비용</div>
+                        <div class="info-value" style="color:var(--accent-4)">${sanitize(a.cost)}</div>
+                    </div>
+                </div>
+                <p class="modal-desc" style="margin-top:20px">${sanitize(a.desc)}</p>
+                <div class="modal-tip">${sanitize(a.tip)}</div>
+                <div class="modal-tags">${a.tags.map(t => `<span class="card-tag">#${sanitize(t)}</span>`).join('')}</div>
+            </div>
+        `;
+        document.getElementById('modalOverlay').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(e) {
+        if (e.target === document.getElementById('modalOverlay')) {
+            closeModalDirect();
+        }
+    }
+    function closeModalDirect() {
+        document.getElementById('modalOverlay').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
+
+    // ============================================================
+    //  SCROLL OBSERVERS
+    // ============================================================
+    function observeCards(container) {
+        const cards = container.querySelectorAll('.card, .tip-card');
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    obs.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        cards.forEach(c => obs.observe(c));
+    }
+
+    // Reveal sections
+    const revealObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('active');
+                revealObs.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+    // ============================================================
+    //  NAV SCROLL EFFECT
+    // ============================================================
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+        const nav = document.getElementById('nav');
+        const btt = document.getElementById('backToTop');
+        const y = window.scrollY;
+
+        nav.classList.toggle('scrolled', y > 50);
+        btt.classList.toggle('show', y > 500);
+
+        // Active nav link
+        const sections = ['food', 'attractions', 'tips', 'vibe'];
+        for (const id of sections.reverse()) {
+            const el = document.getElementById(id);
+            if (el && y >= el.offsetTop - 200) {
+                document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+                const link = document.querySelector(`.nav-links a[href="#${id}"]`);
+                if (link) link.classList.add('active');
+                break;
+            }
+        }
+        lastScroll = y;
+    });
+
+    // ============================================================
+    //  MOBILE NAV
+    // ============================================================
+    function toggleNav() {
+        document.getElementById('navLinks').classList.toggle('open');
+    }
+    document.querySelectorAll('.nav-links a').forEach(a => {
+        a.addEventListener('click', () => {
+            document.getElementById('navLinks').classList.remove('open');
+        });
+    });
+
+    // ============================================================
+    //  COUNT UP ANIMATION
+    // ============================================================
+    function animateCountUp() {
+        document.querySelectorAll('.count-up').forEach(el => {
+            const target = +el.dataset.target;
+            const duration = 2000;
+            const start = performance.now();
+            function tick(now) {
+                const progress = Math.min((now - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                el.textContent = Math.round(eased * target);
+                if (progress < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+        });
+    }
+    const heroObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                animateCountUp();
+                heroObs.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.5 });
+    heroObs.observe(document.querySelector('.hero-stats'));
+
+    // ============================================================
+    //  PARTICLE SYSTEM (Canvas)
+    // ============================================================
+    (function initParticles() {
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        let w, h, particles = [];
+
+        function resize() {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        class Particle {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * w;
+                this.y = Math.random() * h;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.speedY = (Math.random() - 0.5) * 0.4;
+                this.opacity = Math.random() * 0.4 + 0.1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > w || this.y < 0 || this.y > h) this.reset();
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(108, 99, 255, ${this.opacity})`;
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 80; i++) particles.push(new Particle());
+
+        function animate() {
+            ctx.clearRect(0, 0, w, h);
+            particles.forEach(p => { p.update(); p.draw(); });
+
+            // Draw connections
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 120) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(108, 99, 255, ${0.06 * (1 - dist / 120)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+        animate();
+    })();
+
+    // ============================================================
+    //  UTILITY
+    // ============================================================
+    function sanitize(str) {
+        const div = document.createElement('div');
+        div.textContent = String(str);
+        return div.innerHTML;
+    }
+
+    // ============================================================
+    //  INIT
+    // ============================================================
+    loadData();
+
+    </script>
+</body>
+</html>
